@@ -18,11 +18,11 @@
     width: 100%;
     z-index: 9999;
   }
-  
 </style>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">ArtyProd</a>
+<body style="background-image: url('https://knect365.imgix.net/article/images/cacheable/50ef0207-6e3e-4e89-861d-f569ec64f88e-featured-93f53ffc548b877b65b282260910f358.png');">
+
+    <nav style="background-color: rgb(43, 80, 120);" class="navbar navbar-expand-lg ">
+        <a style="black" class="navbar-brand" href="#">ArtyProd</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,28 +30,6 @@
           <ul class="navbar-nav">
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'home' %}">Accueil<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Projets
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'home' %}">Liste des projets</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'project_create' %}">Ajouter un projet</a>
-              </div>
-            </li>
-
-            
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               Services
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#services">Services</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'service' %}">Ajouter un service</a>
-              </div>
             </li>
 
             <li class="nav-item dropdown">
@@ -65,23 +43,61 @@
               </div>
             </li>
 
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Equipes
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'team_list'%}">Liste d'équipes</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'team_create' %}">Ajouter un equipe</a>
-              </div>
-            </li>
-
-          
+           
+            {% if not user.is_authenticated %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+              </li>
+            {% endif %}
+            {% if not user.is_authenticated %}
             <li class="nav-item active">
-              <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+              <a class="nav-link" href="{% url 'register' %}">Inscription<span class="sr-only"></span></a>
             </li>
+          {% endif %}
 
+
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Projets
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'home' %}">Liste des projets</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'project_create' %}">Ajouter un projet</a>
+                </div>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Services
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#services">Services</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'service' %}">Ajouter un service</a>
+                </div>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Equipes
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'team_list'%}">Liste d'équipes</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'team_create' %}">Ajouter une équipe</a>
+                </div>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+              </li>
+            {% else %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+              </li>
+            {% endif %}
           </ul>
         </div>
       </nav>

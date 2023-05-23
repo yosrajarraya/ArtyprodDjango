@@ -1,0 +1,8 @@
+<!-- Exemple de lien pour la déconnexion -->
+<a href="{% url 'logout' %}">Se déconnecter</a>
+
+<!-- Exemple de bouton pour la déconnexion -->
+<form action="{% url 'logout' %}" method="post">
+  {% csrf_token %}
+  <button type="submit">Se déconnecter</button>
+</form>

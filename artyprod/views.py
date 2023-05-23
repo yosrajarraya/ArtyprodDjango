@@ -1,5 +1,6 @@
 from multiprocessing import context
 from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
@@ -17,8 +18,22 @@ from .models import Personnel
 
 from django.shortcuts import render, get_object_or_404, redirect
 
+from django.contrib.auth.decorators import login_required
+
+
+from django.shortcuts import render
+from django.core.mail import send_mail
+from .forms import ContactForm
+
+
 from .models import Team
 from .forms import TeamForm
+
+from django.core.mail import send_mail
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
 
 def index(request):
     return render(request, 'artyprod/base.html')
@@ -55,7 +70,7 @@ def login_index(request):
         form = AuthenticationForm()
     return render(request, 'artyprod/login.html',{'form': form})
 
-#@login_required
+@login_required
 def project_create(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -65,7 +80,7 @@ def project_create(request):
     else:
         form = ProjectForm()
     return render(request, 'artyprod/project_create.html', {'form': form})
-
+@login_required
 def service(request):
     if request.method == 'POST':
         form = ServiceForm(request.POST)
@@ -91,13 +106,13 @@ def personnel_create(request):
 
 
 
-
+@login_required
 def team_list(request):
     teams = Team.objects.all()
     return render(request, 'artyprod/team_list.html', {'teams': teams})
 from django.shortcuts import render, get_object_or_404
 from .models import Team
-
+@login_required
 def team_detail(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     members = team.members.all()
@@ -106,7 +121,7 @@ def team_detail(request, team_id):
     return render(request, 'artyprod/team_detail.html', {'team': team, 'members': members, 'projects': projects})
 
 
-
+@login_required
 def team_create(request):
     if request.method == 'POST':
         form = TeamForm(request.POST)
@@ -122,25 +137,47 @@ def team_create(request):
     return render(request, 'artyprod/team_create.html', {'form': form})
 
 
-
+@login_required
 def team_update(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     if request.method == 'POST':
         form = TeamForm(request.POST, instance=team)
         if form.is_valid():
             form.save()
-            return redirect('team_detail', team_id=team_id)
+            return redirect('team_list')
     else:
         form = TeamForm(instance=team)
     return render(request, 'artyprod/team_update.html', {'form': form, 'team': team})
 
+
+@login_required
 def team_delete(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     if request.method == 'POST':
         team.delete()
         return redirect('team_list')
     return render(request, 'artyprod/team_delete.html', {'team': team})
+def contact(request):
+    if request.method =="POST":
+        name=request.POST.get('name')
+        msg=request.POST.get('message')
+        email= request.POST.get('email')
+        print(name,msg,email)
+        send_mail(
+            name,msg,'yosrajarraya50@gmail.com',[email]
+        )
+        return redirect('home')
+    return render(request,'artyprod/contact.html')
 
 
-
-
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Votre compte a été créé avec succès ! Vous pouvez maintenant vous connecter.')
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'artyprod/registre.html', {'form': form})

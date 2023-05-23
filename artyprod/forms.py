@@ -6,6 +6,12 @@ from .models import Service
 from .models import Team, Personnel
 
 from django import forms
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(label='Nom', max_length=100)
+    email = forms.EmailField(label='Adresse e-mail', max_length=100)
+    message = forms.CharField(label='Message', widget=forms.Textarea)
 
 
 class TeamForm(forms.ModelForm):

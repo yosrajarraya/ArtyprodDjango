@@ -49,7 +49,7 @@
 </style>
 
 <h2 style="margin-top: 7%;text-decoration:underline;color: #007bff; font-size: 24px; font-weight: bold;text-align:center;margin-bottom:2%">Créer une nouvelle équipe</h2>
-  <div class="form-container">
+  <div class="form-container" style="color: #007bff">
   <form enctype='multipart/form-data' method='POST' class="post-form">
       {% csrf_token %}
       {{ form.name.errors }}

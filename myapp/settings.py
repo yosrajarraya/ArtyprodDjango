@@ -29,9 +29,26 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+LOGOUT_REDIRECT_URL = 'home'  # L'URL vers laquelle rediriger après la déconnexion
+
+
 # Application definition
 
+
+# settings.py
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_PORT = 587
+#EMAIL_HOST_USER = 'yosrajarraya50@gmail.com'  # Remplacez par votre adresse e-mail Gmail
+#EMAIL_HOST_PASSWORD = '11150650Yj'  # Remplacez par le mot de passe de votre adresse e-mail
+#EMAIL_USE_TLS = True
+#DEFAULT_FROM_EMAIL = 'yosrajarraya20@gmail.com'  # Remplacez par votre adresse e-mail Gmail
+
+
+
+
 INSTALLED_APPS = [
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,3 +148,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'yosrajarraya50@gmail.com'
+EMAIL_HOST_PASSWORD = 'xgvwcmbesovawafi'
+#xoray51155@pgobo.com
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
